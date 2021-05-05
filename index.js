@@ -1,12 +1,14 @@
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, screen } = require("electron");
 const chokidar = require("chokidar");
 const path = require("path");
 
 
 function createWindow() {
+  const { width, height } = screen.getPrimaryDisplay().workAreaSize;
+
   const mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: width / 1.25,
+    height: height / 1.25,
     icon: path.join(__dirname, 'public/favicon.png')
   });
   mainWindow.loadFile(path.join(__dirname, "public/index.html"));
