@@ -2,7 +2,7 @@
   import Service from "./screens/Service.svelte";
   import Welcome from "./screens/Welcome.svelte";
 
-  let state = "welcome"; // 'welcome' or 'service'
+  let state = "welcome"; // 'welcome' or service
 
   function start(params) {
     state = params.detail.category;
