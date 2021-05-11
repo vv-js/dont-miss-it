@@ -12,10 +12,9 @@
   }
 
   onMount(() => {
-    console.log("onmount");
-    window.ipc.send("toMain", "some data");
-    window.ipc.receive("fromMain", (data) => {
-      console.log(`Received ${data} from main`);
+    window.ipc.send("getData");
+    window.ipc.receive("loadedData", (data) => {
+      console.log(data);
     });
   });
 </script>

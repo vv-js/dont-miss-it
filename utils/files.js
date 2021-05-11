@@ -1,30 +1,30 @@
 'use strict';
 
-const fs = require('fs');
+const { readFile, writeFile } = require('fs');
+const { mkdir, appendFile } = require('fs/promises');
 
-function jsonReader(path) {
-    return new Promise((resolve, reject) =>
-        fs.readFile(path, 'utf8', (err, data) => {
-            if (err) {
+async function jsonReader(path) {
+    return await readFile(path, 'utf8', async (err, data) => {
+        if (err) {
+            if (err.code === 'ENOENT') {
                 try {
-                    return resolve(jsonWriter(path, []));
+                    await mkdir('./data');
+                    await appendFile(path, JSON.stringify([]), 'utf8');
                 } catch (err) {
-                    reject(err);
+                    throw err;
                 }
             }
-            resolve(JSON.parse(data));
-        })
-    );
+            throw err;
+        };
+        return JSON.parse(data);    
+    });
 }
 
-function jsonWriter(path, data) {
-    return new Promise((resolve, reject) =>
-        fs.writeFile(path, JSON.stringify(data), 'utf8', (err) => {
-            if (err) reject(err);
-            else resolve(data);
-        })
-    );
-
+async function jsonWriter(path, data) {
+    return await writeFile(path, JSON.stringify(data), 'utf8', (err) => {
+        if (err) throw err;
+        return data;
+    });
 }
 
 module.exports = {
