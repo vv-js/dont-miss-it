@@ -1,4 +1,4 @@
-const { app, BrowserWindow, screen } = require("electron");
+const { app, BrowserWindow, screen, ipcMain } = require("electron");
 const chokidar = require("chokidar");
 const path = require("path");
 
@@ -9,10 +9,12 @@ function createWindow() {
   const mainWindow = new BrowserWindow({
     width: width / 1.25,
     height: height / 1.25,
-    icon: path.join(__dirname, 'public/favicon.png')
+    icon: path.join(__dirname, 'public/favicon.png'),
+    webPreferences: {
+      preload: path.join(__dirname, "preload.js")
+    }
   });
   mainWindow.loadFile(path.join(__dirname, "public/index.html"));
-  mainWindow.webContents.openDevTools();
 
   chokidar.watch(path.join(__dirname, 'public/build/bundle.js')).on('change', () => {
     mainWindow.reload();
@@ -20,3 +22,7 @@ function createWindow() {
 }
 
 app.on("ready", createWindow);
+
+ipcMain.on('toMain', (ev, args) => {
+  ev.sender.send("fromMain", args);
+});

@@ -10,7 +10,6 @@
   <Login />
 {:else}
   <h2>{selection}</h2>
-  
 {/if}
 
 <style>

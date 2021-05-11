@@ -1,6 +1,7 @@
 <script>
   import Service from "./screens/Service.svelte";
   import Welcome from "./screens/Welcome.svelte";
+  import { onMount } from "svelte";
 
   var state = "welcome"; // 'welcome' or service
   var needLogin = 0;
@@ -9,6 +10,14 @@
     state = params.detail.category.name;
     needLogin = params.detail.category.needLogin;
   }
+
+  onMount(() => {
+    console.log("onmount");
+    window.ipc.send("toMain", "some data");
+    window.ipc.receive("fromMain", (data) => {
+      console.log(`Received ${data} from main`);
+    });
+  });
 </script>
 
 <main>
