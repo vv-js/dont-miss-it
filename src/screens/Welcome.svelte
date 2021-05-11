@@ -9,12 +9,14 @@
 
   const services = [
     {
-      name: "olx",
+      name: "OLX",
       icon: "../public/icons/olx.png",
+      needLogin: 0,
     },
     {
-      name: "facebook",
+      name: "Facebook",
       icon: "../public/icons/facebook.png",
+      needLogin: 1,
     },
   ];
 </script>
@@ -22,7 +24,7 @@
 <h2>Available services</h2>
 <nav class="nav-services">
   {#each services as service}
-    <button on:click={() => select(service.name)}>
+    <button on:click={() => select(service)}>
       <img src={service.icon} alt={service.name} />
     </button>
   {/each}
@@ -35,18 +37,18 @@
   nav button {
     border: none;
     outline: none;
-    border-radius: 20px;
+    border-radius: 8px;
     overflow: hidden;
     padding: 0;
     width: 150px;
     height: 150px;
-    filter: grayscale(35%);
-    box-shadow: 0px 5px 5px #7a7a7a;
+    filter: grayscale(45%);
+    box-shadow: 0px 2px 5px #7a7a7a;
     cursor: pointer;
   }
   nav button:hover {
     filter: grayscale(0%);
-    box-shadow: 0px 8px 8px #7a7a7a;
+    box-shadow: 0px 3px 8px #7a7a7a;
   }
   nav button:not(:last-child) {
     margin-right: 20px;

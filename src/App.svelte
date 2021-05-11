@@ -2,10 +2,12 @@
   import Service from "./screens/Service.svelte";
   import Welcome from "./screens/Welcome.svelte";
 
-  let state = "welcome"; // 'welcome' or service
+  var state = "welcome"; // 'welcome' or service
+  var needLogin = 0;
 
   function start(params) {
-    state = params.detail.category;
+    state = params.detail.category.name;
+    needLogin = params.detail.category.needLogin;
   }
 </script>
 
@@ -13,13 +15,13 @@
   {#if state === "welcome"}
     <Welcome on:select={start} />
   {:else}
-    <Service selection={state} />
+    <Service selection={state} {needLogin} />
   {/if}
 </main>
 
 <style>
   main {
-    height: 100vh;
+    min-width: 400px;
     padding: 25px 125px;
   }
 </style>
